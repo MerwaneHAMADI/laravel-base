@@ -5,17 +5,16 @@ Clone the project and go to the root.
 
 To build the Application and it's containers, in your terminal go to the root directory and run:
 
-**# docker-compose up**
-
-**# docker-compose exec app composer install**
+`docker-compose up`
+`docker-compose exec app composer install`
 
 Migrate :
 
-**# docker-compose exec app php artisan migrate**
+`docker-compose exec app php artisan migrate`
 
 Seed :
 
-**# docker-compose exec app php artisan db:seed**
+`docker-compose exec app php artisan db:seed`
 
 Requirements
 =======
@@ -24,7 +23,7 @@ Requirements
 
 2- Once you have a working version of Laravel, you will be required to create a laravel database migration based on the provided Employee csv (link below).  Look at the laravel documentation on https://laravel.com/ to understand database migrations and how to create one. **DONE**
 
-3- Create a database seeder class which reads/parses the csv file to populate the database table you created from the migration above. 
+3- Create a database seeder class which reads/parses the csv file to populate the database table you created from the migration above.
 **To look at the database, go to http://127.0.0.1/simplecrud and login as a standard user with those logins :**
 **user : user@user.com**
 **password : user1!**
@@ -47,8 +46,13 @@ Create an  Admin view (or set of views) to perform CRUD operations to manipulate
 
 **Verify that you can perform all the crud operations on Employees**
 
+
+**To run tests** :
+`./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/Feature/UserTest.php`
+
+
 **BONUS**
 
-I implemented a way for admin to create users, roles and permissions. Verify that : 
+I implemented a way for admin to create users, roles and permissions. Verify that :
 A regular user can't create an admin user ( he would then be able to perform update and delete operations, we don't want that)
 An admin user can read/update/create/delete admins, users, roles, permissions and employees
