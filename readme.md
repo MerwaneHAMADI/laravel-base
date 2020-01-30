@@ -6,6 +6,7 @@ Clone the project and go to the root.
 To build the Application and it's containers, in your terminal go to the root directory and run:
 
 `docker-compose up`
+
 `docker-compose exec app composer install`
 
 Migrate :
@@ -48,6 +49,7 @@ Create an  Admin view (or set of views) to perform CRUD operations to manipulate
 
 
 **To run tests** :
+
 `./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/Feature/UserTest.php`
 
 
