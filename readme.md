@@ -27,7 +27,6 @@ To build the Application and it's containers, in your terminal go to the root di
 
 At this stage you will have a working application at <a href="http://127.0.0.1" target="_blank">http://127.0.0.1</a> and can use your favorite IDE to develop in your local environment's git cloned directory.
 
-<<<<<<< HEAD
 3- Create a database seeder class which reads/parses the csv file to populate the database table you created from the migration above.
 **To look at the database, go to http://127.0.0.1 and click on login to login as a standard user with those logins :**
 **user : jonathan@user.com**
@@ -36,7 +35,6 @@ At this stage you will have a working application at <a href="http://127.0.0.1" 
 =======
 Laravel DB Setup
 ================
->>>>>>> 7851925b2444d4a6b1fbea919730d843a4e3c764
 
 We will run the Laravel migration command to setup database tables. This executes the command within the application container.
 
@@ -50,7 +48,6 @@ Laravel Authentication
 **# docker-compose exec app php artisan ui vue --auth**
 -->
 
-<<<<<<< HEAD
 **user : jonathan@admin.com**
 
 **password : govzilla**
@@ -59,27 +56,22 @@ Cleanup
 =======
 
 ## Removing your container images
->>>>>>> 7851925b2444d4a6b1fbea919730d843a4e3c764
 
 The best way to do that is with
 
 **# docker system prune -a**
 
-<<<<<<< HEAD
 =======
 ## Deleting locally stored volumes
 
 Find the volume with the following command.
 
 **# docker volume ls**
->>>>>>> 7851925b2444d4a6b1fbea919730d843a4e3c764
 
 Delete the volume with:
 
-<<<<<<< HEAD
 I implemented a way for admin to create users, roles and permissions. Verify that :
 A regular user can't create an admin user ( he would then be able to perform update and delete operations, we don't want that)
 An admin user can read/update/create/delete admins, users and employees.
 =======
 **# docker volume rm VOLUMENAME**
->>>>>>> 7851925b2444d4a6b1fbea919730d843a4e3c764
