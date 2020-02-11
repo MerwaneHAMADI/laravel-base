@@ -14,6 +14,11 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $this->assertTrue(true);
+
+      parent::setUp();
+      // you can call
+      $this->artisan('db:seed');
+      // or
+      $this->seed();
     }
 }
