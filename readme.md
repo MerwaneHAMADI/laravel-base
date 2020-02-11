@@ -28,11 +28,12 @@ To build the Application and it's containers, in your terminal go to the root di
 At this stage you will have a working application at <a href="http://127.0.0.1" target="_blank">http://127.0.0.1</a> and can use your favorite IDE to develop in your local environment's git cloned directory.
 
 3- Create a database seeder class which reads/parses the csv file to populate the database table you created from the migration above.
+
 **To look at the database, go to http://127.0.0.1 and click on login to login as a standard user with those logins :**
 **user : jonathan@user.com**
 **password : govzilla**
 **You will see the dashboard. Then click on Employees and verify that the seed worked.**
-=======
+
 Laravel DB Setup
 ================
 
@@ -51,7 +52,7 @@ Laravel Authentication
 **user : jonathan@admin.com**
 
 **password : govzilla**
-=======
+
 Cleanup
 =======
 
@@ -61,7 +62,6 @@ The best way to do that is with
 
 **# docker system prune -a**
 
-=======
 ## Deleting locally stored volumes
 
 Find the volume with the following command.
@@ -70,8 +70,10 @@ Find the volume with the following command.
 
 Delete the volume with:
 
+**# docker volume rm VOLUMENAME**
+
+
 I implemented a way for admin to create users, roles and permissions. Verify that :
 A regular user can't create an admin user ( he would then be able to perform update and delete operations, we don't want that)
+
 An admin user can read/update/create/delete admins, users and employees.
-=======
-**# docker volume rm VOLUMENAME**
