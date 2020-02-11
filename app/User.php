@@ -1,27 +1,22 @@
 <?php
-
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Spatie\Permission\Traits\HasRoles;
+use App\Permissions\HashPermissionsTrait;
 
 class User extends Authenticatable
 {
+    use Notifiable, HashPermissionsTrait;
 
-    use Notifiable;
-    use CrudTrait;
-    use HasRoles;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guard_name = 'api';
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email', 'password',
     ];
 
     /**
