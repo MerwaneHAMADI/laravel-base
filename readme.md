@@ -1,79 +1,55 @@
-Overview
-========
-
-We will use Docker to setup containers to run our Laravel application. This should be a simple implementation to get developers up and running ASAP. Additionaly these containers can be used in any staging and production environments.
-
 Setup
 =======
 
-Checkout code from git repository.
-
-Install docker and docker-compose.
-
-<!-- Not needed as we include composer install in the app
-Use docker composer image to install framework packages.
-
-**# docker run --rm -v $(pwd):/app composer install**
-
-Update permissions of files on your local system. For Linux use:
-
-**# sudo chown -R $USER:$USER ~/your-app-directory**-->
+Clone the project and go to the root.
 
 To build the Application and it's containers, in your terminal go to the root directory and run:
 
-**# docker-compose up**
+`docker-compose up`
 
-**# docker-compose exec app composer install**
+`docker-compose exec app composer install`
 
-At this stage you will have a working application at <a href="http://127.0.0.1" target="_blank">http://127.0.0.1</a> and can use your favorite IDE to develop in your local environment's git cloned directory.
+Migrate :
+
+`docker-compose exec app php artisan migrate`
+
+Seed :
+
+`docker-compose exec app php artisan db:seed`
+
+Requirements
+=======
+
+1- Download or clone the repository from https://github.com/govzilla/laravel-base. Follow the readme.md file to get your instance running. **DONE**
+
+2- Once you have a working version of Laravel, you will be required to create a laravel database migration based on the provided Employee csv (link below).  Look at the laravel documentation on https://laravel.com/ to understand database migrations and how to create one. **DONE**
 
 3- Create a database seeder class which reads/parses the csv file to populate the database table you created from the migration above.
-
 **To look at the database, go to http://127.0.0.1 and click on login to login as a standard user with those logins :**
 **user : jonathan@user.com**
 **password : govzilla**
 **You will see the dashboard. Then click on Employees and verify that the seed worked.**
 
-Laravel DB Setup
-================
+4-Next, define some form of user management. A good baseline is to start with the laravel authentication mechanisms (ref https://laravel.com/docs/6.x/authentication).  The only users you need concern yourself with are standard users and admins.**DONE**
 
-We will run the Laravel migration command to setup database tables. This executes the command within the application container.
+5-Create a menu and view to show the employee data form the database above in a table as a list of names (first name and last name columns sorted ascending by last name).**DONE**
 
-**# docker-compose exec app php artisan migrate**
+6-Create a view that displays the detailed employee data when clicking on a row (or first name or last name) in the view above.
+**Just navigate on the app and verify if everything is correct**
 
-<!--
-Laravel Authentication
+Create an  Admin view (or set of views) to perform CRUD operations to manipulate the employee data in the database.
 
-**# docker-compose exec app composer require laravel/ui --dev**
-
-**# docker-compose exec app php artisan ui vue --auth**
--->
+**Log out and use those logins**
 
 **user : jonathan@admin.com**
 
 **password : govzilla**
 
-Cleanup
-=======
+**Verify that you can perform all the crud operations on Employees**
 
-## Removing your container images
 
-The best way to do that is with
-
-**# docker system prune -a**
-
-## Deleting locally stored volumes
-
-Find the volume with the following command.
-
-**# docker volume ls**
-
-Delete the volume with:
-
-**# docker volume rm VOLUMENAME**
-
+**BONUS**
 
 I implemented a way for admin to create users, roles and permissions. Verify that :
 A regular user can't create an admin user ( he would then be able to perform update and delete operations, we don't want that)
-
 An admin user can read/update/create/delete admins, users and employees.
