@@ -25,9 +25,9 @@ Requirements
 2- Once you have a working version of Laravel, you will be required to create a laravel database migration based on the provided Employee csv (link below).  Look at the laravel documentation on https://laravel.com/ to understand database migrations and how to create one. **DONE**
 
 3- Create a database seeder class which reads/parses the csv file to populate the database table you created from the migration above.
-**To look at the database, go to http://127.0.0.1/simplecrud and login as a standard user with those logins :**
-**user : user@user.com**
-**password : user1!**
+**To look at the database, go to http://127.0.0.1 and click on login to login as a standard user with those logins :**
+**user : jonathan@user.com**
+**password : govzilla**
 **You will see the dashboard. Then click on Employees and verify that the seed worked.**
 
 4-Next, define some form of user management. A good baseline is to start with the laravel authentication mechanisms (ref https://laravel.com/docs/6.x/authentication).  The only users you need concern yourself with are standard users and admins.**DONE**
@@ -41,20 +41,16 @@ Create an  Admin view (or set of views) to perform CRUD operations to manipulate
 
 **Log out and use those logins**
 
-**user : admin@admin.com**
+**user : jonathan@admin.com**
 
-**password : admin1**
+**password : govzilla**
 
 **Verify that you can perform all the crud operations on Employees**
 
-
-**To run tests** :
-
-`./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/Feature/UserTest.php`
 
 
 **BONUS**
 
 I implemented a way for admin to create users, roles and permissions. Verify that :
 A regular user can't create an admin user ( he would then be able to perform update and delete operations, we don't want that)
-An admin user can read/update/create/delete admins, users, roles, permissions and employees
+An admin user can read/update/create/delete admins, users and employees.
