@@ -4,10 +4,17 @@
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
+|    ==========================
+|    ABOUT ROUTES AND MIDDLEWARES
+|    ============================
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+|
+|    All Employee and User views require authentication  no matter the
+|   action --> called in Route group
+|   User Views also require for the user to be admin --> called in another route group
+|   But Employee Views require the user to be admin only for certain actions.
+|   As said in the Laravel documentation, it is then better to implement the middleware
+|   in the EmployeeController in the constructor.
 |
  */
 
@@ -15,13 +22,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
+Route::group(['middleware' => 'auth'], function () {
+  Route::resource('employee', 'Dashboard\EmployeeController');
 
-Route::get('/employees/{id}', 'Dashboard\EmployeeController@show')->name('employee_path');
-Route::get('/employees', 'Dashboard\EmployeeController@index')->name('employees_path');
-
-Route::group(['middleware' => 'role:admin'], function () {
+  Route::group(['middleware' => 'role'], function(){
     Route::resource('user', 'Dashboard\UserController');
-    Route::resource('employee', 'Dashboard\EmployeeController');
+  });
 });

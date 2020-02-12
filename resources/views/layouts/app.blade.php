@@ -25,13 +25,11 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
-
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
-
 tr:nth-child(even) {
   background-color: #dddddd;
 }
@@ -67,12 +65,12 @@ tr:nth-child(even) {
                             @endif
                         @else
                         <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link" href="{{route('employees_path')}}" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link" href="{{route('employee.index')}}" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Employees <span class="caret"></span>
                                 </a>
                             </li>
 
-                            @if(Auth::user()->hasRole('admin')&& Auth::check())
+                            @if(Auth::user()->role == 'admin'&& Auth::check())
                               <li class="nav-item dropdown">
                                   <a id="navbarDropdown" class="nav-link" href="{{route('user.index')}}" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
                                       Users <span class="caret"></span>
