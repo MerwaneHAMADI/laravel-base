@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
+
 
 class EmployeeTableSeeder extends Seeder {
   /**
@@ -24,12 +26,13 @@ class EmployeeTableSeeder extends Seeder {
     $delete = DB::table($this->table)->delete();
     if(!file_exists($this->filename))
         {
-            echo ('The Employee file dosmt not exists');
+            echo ('The Employee file dosn\'t not exist');
         }
         else{
             $seedData = $this->seedFromCSV($this->filename, ',');
             if($seedData){
                  DB::table($this->table)->insert($seedData);
+                 \App\Employee::where('created_at', null)->update(['created_at' => Carbon::now()->format('Y-m-d H:i:s')]);
             }
             else{
                 echo 'No data available in file';

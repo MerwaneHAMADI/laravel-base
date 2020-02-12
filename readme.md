@@ -50,6 +50,6 @@ Create an  Admin view (or set of views) to perform CRUD operations to manipulate
 
 **BONUS**
 
-I implemented a way for admin to create users, roles and permissions. Verify that :
+I implemented a way for admin to create users. Verify that :
 A regular user can't create an admin user ( he would then be able to perform update and delete operations, we don't want that)
 An admin user can read/update/create/delete admins, users and employees.

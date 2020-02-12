@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employee;
-use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use App\Http\Requests\EmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -14,6 +14,14 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('role', ['except' => [
+            'index',
+            'show'
+        ]]);
+    }
+
     public function index()
     {
         $employees = Employee::orderBy('last_name','ASC')->paginate(10);
@@ -32,61 +40,18 @@ class EmployeeController extends Controller
 
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        //
-        $rules = array(
-            'name_prefix' => ['string', 'max:191'],
-            'first_name' => ['string', 'max:191', 'required'],
-            'last_name' => ['string', 'max:191', 'required'],
-            'gender' => ['string', 'max:191', 'required'],
-            'email' => ['string', 'max:191', 'unique:employees', 'required'],
-            'father_name' => ['string', 'max:191', 'required'],
-            'salary' => ['integer', 'required'],
-            'phone_no' => ['string ', 'max:191', 'required'],
-            'city' => ['string', 'max:191', 'required '],
-            'state' => ['string', 'max:191', 'required '],
-            'zip' => ['integer', 'required'],
-        );
-        $validator = Validator::make($request->all(), $rules);
+      Employee::create($request->all());
+      return redirect()->route('employee.index');
 
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::back()
-                ->withErrors($validator);
-        }
-        else {
-
-            $employee = new Employee();
-            $employee->emp_id = rand(1, 100000);
-            $employee->name_prefix = $request->name_prefix;
-            $employee->first_name = $request->first_name;
-            $employee->middle_name = $request->middle_name;
-            $employee->last_name = $request->last_name;
-            $employee->gender = $request->gender;
-            $employee->email = $request->email;
-            $employee->father_name = $request->father_name;
-            $employee->mother_name = $request->mother_name;
-            $employee->mother_maiden_name = $request->mother_maiden_name;
-            $employee->date_of_birth = $request->date_of_birth;
-            $employee->date_of_joining = $request->date_of_joining;
-            $employee->salary = $request->salary;
-            $employee->ssn = $request->name_prefix;
-            $employee->phone_no = $request->phone_no;
-            $employee->city = $request->city;
-            $employee->state = $request->state;
-            $employee->zip = $request->zip;
-            $employee->created_at = Carbon::now();
-            $employee->updated_at = Carbon::now();
-            $employee->save();
-            return redirect()->route('employee.index');
-        }
     }
 
     /**
@@ -97,8 +62,8 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-         $employee = Employee::where('id', $id)->first();
-        return view('dashboard.employee.view', compact('employee'));
+        $employee = Employee::where('id', $id)->first();
+        return view('dashboard.employee.show', compact('employee'));
 
     }
 
@@ -112,6 +77,8 @@ class EmployeeController extends Controller
     {
         //
         $employee = Employee::where('id', $id)->first();
+        $employee->date_of_joining = date('Y-m-d', strtotime(str_replace('.', '/', $employee->date_of_joining)));
+        $employee->date_of_birth = date('Y-m-d', strtotime(str_replace('.', '/', $employee->date_of_birth)));
         return view('dashboard.employee.update', compact('employee'));
     }
 
@@ -122,54 +89,11 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmployeeRequest $request, $id)
     {
-        //
-        $rules = array(
-            'emp_id' => ['integer', 'required'],
-            'name_prefix' => ['string', 'max:191'],
-            'first_name' => ['string', 'max:191', 'required'],
-            'last_name' => ['string', 'max:191', 'required'],
-            'gender' => ['string', 'max:191', 'required'],
-            'email' => ['string', 'max:191', 'required'],
-            'father_name' => ['string', 'max:191', 'required'],
-            'salary' => ['integer', 'required'],
-            'phone_no' => ['string ', 'max:191', 'required'],
-            'city' => ['string', 'max:191', 'required '],
-            'state' => ['string', 'max:191', 'required '],
-            'zip' => ['integer', 'required'],
-        );
-        $validator = Validator::make($request->all(), $rules);
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::back()
-                ->withErrors($validator);
-        }
-        else {
-            $employee = Employee::where('id', $id)->first();
-            $employee->emp_id = $request->emp_id;
-            $employee->name_prefix = $request->name_prefix;
-            $employee->first_name = $request->first_name;
-            $employee->middle_name = $request->middle_name;
-            $employee->last_name = $request->last_name;
-            $employee->gender = $request->gender;
-            $employee->email = $request->email;
-            $employee->father_name = $request->father_name;
-            $employee->mother_name = $request->mother_name;
-            $employee->mother_maiden_name = $request->mother_maiden_name;
-            $employee->date_of_birth = $request->date_of_birth;
-            $employee->date_of_joining = $request->date_of_joining;
-            $employee->salary = $request->salary;
-            $employee->ssn = $request->name_prefix;
-            $employee->phone_no = $request->phone_no;
-            $employee->city = $request->city;
-            $employee->state = $request->state;
-            $employee->zip = $request->zip;
-            $employee->created_at = Carbon::now();
-            $employee->updated_at = Carbon::now();
-            $employee->save();
-            return redirect()->route('employee.index');
-        }
+        Employee::find($id)->update($request->all());
+
+        return redirect()->route('employee.index');
     }
 
     /**
@@ -184,8 +108,6 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
         $employee->delete();
 
-        // redirect
-        // Session::flash('message', 'Successfully deleted the emo$employee!');
         return Redirect()->route('employee.index');
     }
 }

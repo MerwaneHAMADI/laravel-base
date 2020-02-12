@@ -27,11 +27,7 @@
                          <tr>
                             <td>{{$user->name}}</td>
                             <td>{{$user->email}}</td>
-                            <td>
-                                @foreach($user->roles as $role)
-                                    {{$role->name}}
-                                @endforeach
-                                </td>
+                            <td>{{$user->role}}</td>
                             <td><a href="{{route('user.edit',$user->id)}}">Edit User</a></td>
                             <td><form action="{{route('user.destroy',$user->id)}}" method="post" onClick="return(confirm('Are you Sure to delete this user'));">
 

@@ -3,7 +3,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class RoleMiddleware
+class Role
 {
     /**
      * Handle an incoming request.
@@ -12,17 +12,12 @@ class RoleMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role, $permission = null)
+    public function handle($request, Closure $next)
     {
-        if (!$request->user()->hasRole($role)) {
+        if ($request->user()->role !='admin') {
 
             abort(404);
 
-        }
-
-        if ($permission !== null && !$request->user()->can($permission)) {
-
-            abort(404);
         }
 
         return $next($request);
